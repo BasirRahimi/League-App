@@ -1,5 +1,11 @@
 <template>
-  <skins :skins="champion.skins" :champion-id="$route.params.id"/>
+  <v-container fluid>
+    <!-- <v-avatar size="240">
+      <img :src="'http://ddragon.leagueoflegends.com/cdn/'+$store.state.lolVersion+'/img/champion/'+champion.image.full" :alt="champion.name">
+    </v-avatar> -->
+    <h1>Skins</h1>
+    <skins :skins="champion.skins" :champion-id="$route.params.id"/>
+  </v-container>
 </template>
 
 <script>
