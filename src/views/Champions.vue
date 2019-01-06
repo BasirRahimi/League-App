@@ -4,13 +4,13 @@
       <v-flex xs12>
         <v-text-field label="Filter Champions" color="yellow darken-2" class="champion-filter" v-model="championFilter"></v-text-field>
       </v-flex>
-      <v-card hover ripple class="ma-2" v-for="champion in filteredChampions" :key="champion.id" @click="loadChampion(champion.id)">
+      <v-card hover ripple class="ma-2 text-xs-center" v-for="champion in filteredChampions" :key="champion.id" @click="loadChampion(champion.id)">
         <v-img 
           :src="'http://ddragon.leagueoflegends.com/cdn/'+$store.state.lolVersion+'/img/champion/'+champion.image.full" :alt="champion.name"
           width="100px"
           height="100px">
         </v-img>
-        <p class="mx-auto my-0 py-1 text-xs-center">{{champion.name}}</p>
+        {{champion.name}}
       </v-card>
     </v-layout>
   </v-container>
