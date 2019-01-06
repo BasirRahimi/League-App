@@ -1,6 +1,9 @@
 <template>
-  <v-carousel class="carousel" :class="{loading: loading}" :height="height" :hide-controls="loading" :hide-delimiters="loading">
+  <v-carousel class="carousel" ref="skinsCarousel" :class="{loading: loading}" :height="height" :hide-controls="loading" hide-delimiters>
     <v-carousel-item v-for="skin in skins" :key="skin.id" :src="imgSrc(skin)">
+      <div v-if="!loading" class="skin-name">
+        {{skin.name === 'default' ? championId : skin.name}}
+      </div>
     </v-carousel-item>
   </v-carousel>
 </template>
@@ -16,17 +19,21 @@ export default {
     },
     loading: {
       type: Boolean
-    }
+    },
   },
   data() {
     return {
-      height: '717'
+      height: ''
     }
   },
-  beforeMount() {
-    if(this.loading) {
-      this.height = '560'
-    }
+  mounted() {
+    this.$nextTick(()=>{
+      if(this.loading) {
+        this.height = 560
+      } else {
+        this.height = this.$refs.skinsCarousel.$el.clientWidth*(717/1215)
+      }
+    })
   },
   methods: {
     imgSrc(skin) {
@@ -45,5 +52,13 @@ export default {
   &.loading {
     max-width: 308px;
   }
+}
+.skin-name {
+  text-align: center;
+  color: #FBC02D;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 </style>

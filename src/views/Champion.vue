@@ -20,7 +20,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout row wrap class="mb-3">
       <v-flex xs12>
         <v-card class="pa-3 champion-abilities">
           <h2>Abilities</h2>
@@ -47,15 +47,23 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <v-card class="pa-3">
+          <h2>Skins</h2>
+          <skins :skins="champion.skins" :champion-id="champion.id" class="mt-2"></skins>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
-// import Skins from '../components/Skins.vue'
+import Skins from '../components/Skins.vue'
 export default {
   name: 'champion',
   components: {
-    // 'skins': Skins
+    'skins': Skins
   },
   data() {
     return {
