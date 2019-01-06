@@ -25,23 +25,23 @@
         <v-card class="pa-3 champion-abilities">
           <h2>Abilities</h2>
           <v-tabs height="76px" centered slider-color="yellow darken-2" show-arrows v-model="abilityTab">
-            <v-tab href="#tab-0"><img height="64" width="64" :src="'http://ddragon.leagueoflegends.com/cdn/'+$store.state.lolVersion+'/img/passive/'+ champion.passive.image.full"></v-tab>
+            <v-tab href="#tab-0"><img height="64" width="64" :src="passive.img"></v-tab>
             <v-tab v-for="(spell,index) in champion.spells" :key="spell.id" :href="'#tab-'+(index + 1)"><img height="64" width="64" :src="'http://ddragon.leagueoflegends.com/cdn/'+$store.state.lolVersion+'/img/spell/' + spell.image.full"></v-tab>
           </v-tabs>
           <v-tabs-items v-model="abilityTab">
             <v-tab-item class="font-weight-light ability-tab" value="tab-0">
               <div class="font-weight-light ability-header my-3 title">
-                {{champion.passive.name}}
+                {{passive.name}}
                 <v-chip color="yellow darken-2" label disabled text-color="black" class="font-weight-medium ability-key-chip">Passive</v-chip>
               </div>
-              {{champion.passive.description}}
+              {{stripHtml(passive.desc)}}
             </v-tab-item>
             <v-tab-item class="font-weight-light ability-tab" v-for="(spell,index) in champion.spells" :key="spell.id" :value="'tab-'+(index + 1)">
               <div class="font-weight-light ability-header my-3 title">
                 {{spell.name}}
                 <v-chip color="yellow darken-2" label disabled text-color="black" class="font-weight-medium ability-key-chip">{{abilityKey(index)}}</v-chip>
               </div>
-              {{spell.description}}
+              {{stripHtml(spell.description)}}
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -69,16 +69,27 @@ export default {
     return {
       champion: [],
       loreExpanded: false,
-      abilityTab: 'tab-1'
+      abilityTab: 'tab-1',
+      passive: {
+        name: '',
+        desc: '',
+        img: ''
+      }
     }
   },
   beforeMount() {
     this.$http.get('http://ddragon.leagueoflegends.com/cdn/'+this.$store.state.lolVersion+'/data/en_US/champion/'+this.$route.params.id+'.json')
     .then(response=>{
       this.champion = response.body.data[this.$route.params.id]
+      this.passive.name = this.champion.passive.name
+      this.passive.desc = this.champion.passive.description
+      this.passive.img = 'http://ddragon.leagueoflegends.com/cdn/'+this.$store.state.lolVersion+'/img/passive/' + this.champion.passive.image.full
     })
   },
   methods: {
+    stripHtml(string) {
+      return string.replace(/(<([^>]+)>)/ig,"")
+    },
     calculatedLoreHeight() {
       return (this.$refs.championLoreText.scrollHeight + this.$refs.championLoreTitle.scrollHeight + 32);
     },
