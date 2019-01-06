@@ -13,7 +13,7 @@
     </v-layout>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-card class="pa-3 champion-lore" :height="loreExpanded ? calculatedLoreHeight : 125">
+        <v-card class="pa-3 champion-lore" :height="loreExpanded ? calculatedLoreHeight() : 125">
           <h2 ref="championLoreTitle">Lore</h2>
           <div class="text"><p ref="championLoreText">{{champion.lore}}</p></div>
           <v-btn small absolute right bottom @click="loreExpanded = !loreExpanded">{{loreExpanded ? 'Show Less' : 'Show More'}}</v-btn>
@@ -42,9 +42,9 @@ export default {
       this.champion = response.body.data[this.$route.params.id]
     })
   },
-  computed: {
+  methods: {
     calculatedLoreHeight() {
-      return (this.$refs.championLoreText.clientHeight + this.$refs.championLoreTitle.clientHeight + 32);
+      return (this.$refs.championLoreText.scrollHeight + this.$refs.championLoreTitle.scrollHeight + 32);
     }
   }
 }
