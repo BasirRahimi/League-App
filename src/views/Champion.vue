@@ -1,22 +1,24 @@
 <template>
   <v-container fluid class="champion-container">
     <v-layout justify-center class="mb-3">
-      <v-card class="px-4 py-2 text-xs-center">
-        <h1>{{champion.name}}</h1>
-        <div class="subheading">{{champion.title}}</div>
-      </v-card>
+      <v-flex xs12>
+        <v-card class="px-4 py-2 text-xs-center">
+          <h1>{{champion.name}}</h1>
+          <div class="subheading">{{champion.title}}</div>
+        </v-card>
+      </v-flex>
     </v-layout>
     <v-layout justify-center class="mb-3">
       <v-avatar class="champion-avatar elevation-10" size="256">
         <v-img lazy-src="/loader.gif" :src="'/champion-avatars/'+champion.id+'_0.jpg'"></v-img>
       </v-avatar>
     </v-layout>
-    <v-layout row wrap class="mb-5">
+    <v-layout row wrap class="mb-3">
       <v-flex xs12>
-        <v-card class="pa-3 champion-lore" :height="loreExpanded ? calculatedLoreHeight() : 125">
+        <v-card class="pa-3 champion-lore" :height="loreExpanded ? calculatedLoreHeight() : 135">
           <h2 ref="championLoreTitle">Lore</h2>
-          <div class="text font-weight-light"><p ref="championLoreText">{{champion.lore}}</p></div>
-          <v-btn small absolute right bottom @click="loreExpanded = !loreExpanded">{{loreExpanded ? 'Show Less' : 'Show More'}}</v-btn>
+          <div class="text"><p class="font-weight-light pt-2" ref="championLoreText">{{champion.lore}}</p></div>
+          <v-btn small class="show-more" @click="loreExpanded = !loreExpanded">{{loreExpanded ? 'Show Less' : 'Show More'}}</v-btn>
         </v-card>
       </v-flex>
     </v-layout>
@@ -131,6 +133,12 @@ export default {
       p {
         margin: 0;
       }
+    }
+    .show-more {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      margin: 0;
     }
   }
   .ability-key-chip {
